@@ -9,6 +9,7 @@ import {
   metamaskLinkExt,
   metamaskLinkWeb,
   optionsToastify,
+  optionsToastify2,
 } from "./contants";
 import icon_up_more from "./images/arrow-up-right-solid.svg";
 import logo_fewcha from "./images/fewcha.jpeg";
@@ -118,6 +119,12 @@ const App: React.FC = () => {
           setIsConnected(true);
           if (res.data.address) {
             setAddress(res.data.address);
+            toast("Connect Fewcha successfully ", optionsToastify);
+          } else {
+            toast(
+              "Click on the Extension, then log out and reload the browser",
+              optionsToastify2
+            );
           }
           setNameWallet("fewcha");
         }
@@ -129,7 +136,6 @@ const App: React.FC = () => {
           console.log("value: ", value);
           setBalance(Number(value));
         }
-        toast("Connect Fewcha successfully ", optionsToastify);
       } catch (error) {}
     } else {
       window.open(fewchaExt, "_blank");
@@ -284,15 +290,22 @@ const App: React.FC = () => {
                         <code>
                           {address
                             ? truncateEthAddress(address)
-                            : "Click on the Extension, then log out and reload the browser"}
+                            : " No address"}
                         </code>
                       </strong>
                     </p>
                     <p>
                       <strong>
-                        Balance: <code>{balance ? balance : "No balance"}</code>
+                        Balance:{" "}
+                        <code>{balance ? balance : " No balance"}</code>
                       </strong>
                     </p>
+                    {!balance && (
+                      <p className="text-red-500 italic">
+                        Fewcha Error: Click on the Extension on Chrome, then
+                        logout and reload the browser
+                      </p>
+                    )}
                     <button
                       onClick={handleDisconnectFewcha}
                       className="btn btn-dis !mt-4 hover:bg-[#bd9710]"
