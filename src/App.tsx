@@ -62,7 +62,9 @@ const App: React.FC = () => {
 
         const balance = await web3.eth.getBalance(account);
         console.log("balance: ", balance);
-        setBalance(Number(balance));
+        const convertBalance = web3.utils.fromWei(balance, "ether");
+        console.log("convertBalance: ", convertBalance);
+        setBalance(convertBalance);
 
         setIsConnected(true);
         if (account) {
@@ -92,11 +94,11 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    const timeId = setInterval(() => {
-      const date = new Date().toLocaleString();
-      setTime(date);
-    }, 1000);
-    return () => clearInterval(timeId);
+    // const timeId = setInterval(() => {
+    //   const date = new Date().toLocaleString();
+    //   setTime(date);
+    // }, 1000);
+    // return () => clearInterval(timeId);
   }, []);
   const truncateRegex = /^(0x[a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/;
 
@@ -192,7 +194,7 @@ const App: React.FC = () => {
             </h3>
             <img
               src={metamask_img}
-              className="max-w-[450px] h-auto rounded-md"
+              className="block mx-auto w-full md:!max-w-[450px] h-auto rounded-md"
               alt="Metamask"
             />
             <div>
@@ -205,7 +207,7 @@ const App: React.FC = () => {
                   </p>
                   <p>
                     <strong>
-                      Balance: <code>{balance}</code>
+                      Balance: <code>{balance}</code> BNB
                     </strong>
                   </p>
                   <button
@@ -308,7 +310,7 @@ const App: React.FC = () => {
                         Balance: <code>{balance}</code>
                       </strong>
                     </p>
-                    {!balance && (
+                    {!address && (
                       <p className="text-red-500 italic">
                         Fewcha Error: Click on the Extension on Chrome, then
                         logout and reload the browser
