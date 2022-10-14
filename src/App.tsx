@@ -13,7 +13,6 @@ import {
 import icon_up_more from "./images/arrow-up-right-solid.svg";
 import logo_fewcha from "./images/fewcha.jpeg";
 import Web3 from "web3";
-import { clear } from "console";
 
 const App: React.FC = () => {
   const [nameWallet, setNameWallet] = useState<NameWalletType>(null);
@@ -49,7 +48,7 @@ const App: React.FC = () => {
 
     setReload(true);
     if (currentProvider) {
-      if(nameWallet==="fewcha") handleDisconnectFewcha()
+      if (nameWallet === "fewcha") handleDisconnectFewcha();
       try {
         const res = await ethereum.request({ method: "eth_requestAccounts" });
         console.log("result connect: ", res);
@@ -92,11 +91,11 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    // const timeId = setInterval(() => {
-    //   const date = new Date().toLocaleString();
-    //   setTime(date);
-    // }, 1000);
-    // return () => clearInterval(timeId);
+    const timeId = setInterval(() => {
+      const date = new Date().toLocaleString();
+      setTime(date);
+    }, 1000);
+    return () => clearInterval(timeId);
   }, []);
   const truncateRegex = /^(0x[a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/;
 
