@@ -269,9 +269,9 @@ const App: React.FC = () => {
                   </a>
                 </p>
                 <p>
-                  After the installation is done, create an account, this is
-                  very simple, for the network, the advice is to choose Aptos
-                  Devnet
+                  After the installation is done, create an account,click on
+                  fewcha extension and create an account this is very simple,
+                  for the network, the advice is to choose Aptos Devnet
                 </p>
                 <p className="italic my-2">
                   Please install and rate us 5 *, thanks you
@@ -280,7 +280,12 @@ const App: React.FC = () => {
                   <div>
                     <p className="mt-4 mb-3">
                       <strong>
-                        Address: <code>{truncateEthAddress(address)}</code>
+                        Address:
+                        <code>
+                          {address
+                            ? truncateEthAddress(address)
+                            : "Click on the Extension, then log out and reload the browser"}
+                        </code>
                       </strong>
                     </p>
                     <p>
