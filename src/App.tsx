@@ -258,7 +258,7 @@ const App: React.FC = () => {
                   </p>
                 </div>
                 <p>
-                  <strong className="pr-1">Status:</strong> Testnest
+                  <strong className="pr-1">Status:</strong> Testnet
                 </p>
                 <p className="my-2">
                   <strong className="pr-1">Docs:</strong>
