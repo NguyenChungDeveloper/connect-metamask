@@ -134,7 +134,15 @@ const App: React.FC = () => {
           const key = Object.keys(balance.data)[0];
           const value = balance.data[key];
           console.log("value: ", value);
-          setBalance(Number(value));
+          setBalance((value: any) => {
+            if (!value) {
+              return 0;
+            } else {
+              return value;
+            }
+          });
+        } else {
+          setBalance(0);
         }
       } catch (error) {}
     } else {
@@ -277,7 +285,8 @@ const App: React.FC = () => {
                 <p>
                   After the installation is done, create an account,click on
                   fewcha extension and create an account this is very simple,
-                  for the network, the advice is to choose Aptos Devnet
+                  for the network, the advice is to choose Aptos Devnet. Click
+                  faucet to get Balance free.
                 </p>
                 <p className="italic my-2">
                   Please install and rate us 5 *, thanks you
@@ -296,8 +305,7 @@ const App: React.FC = () => {
                     </p>
                     <p>
                       <strong>
-                        Balance:{" "}
-                        <code>{balance ? balance : " No balance"}</code>
+                        Balance: <code>{balance}</code>
                       </strong>
                     </p>
                     {!balance && (
