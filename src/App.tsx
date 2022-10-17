@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { NameWalletType, TypeWindow } from "./types";
+import { NameWalletType } from "./types";
 import metamask_img from "./images/metamask.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,6 +14,7 @@ import {
 import icon_up_more from "./images/arrow-up-right-solid.svg";
 import logo_fewcha from "./images/fewcha.jpeg";
 import Web3 from "web3";
+
 
 const App: React.FC = () => {
   const [nameWallet, setNameWallet] = useState<NameWalletType>(null);
@@ -30,6 +31,7 @@ const App: React.FC = () => {
   const [reload, setReload] = useState<boolean>(false);
 
   const ethereum = (window as any).ethereum;
+
 
   function detectCurrentProvider() {
     let provider;
@@ -94,11 +96,11 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    // const timeId = setInterval(() => {
-    //   const date = new Date().toLocaleString();
-    //   setTime(date);
-    // }, 1000);
-    // return () => clearInterval(timeId);
+    const timeId = setInterval(() => {
+      const date = new Date().toLocaleString();
+      setTime(date);
+    }, 1000);
+    return () => clearInterval(timeId);
   }, []);
   const truncateRegex = /^(0x[a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/;
 
@@ -107,6 +109,7 @@ const App: React.FC = () => {
     if (!match) return address;
     return `${match[1]}...${match[2]}`;
   };
+
 
   async function handleInstallOrConnectFewcha() {
     if (hasFecha) {
@@ -136,17 +139,13 @@ const App: React.FC = () => {
           const key = Object.keys(balance.data)[0];
           const value = balance.data[key];
           console.log("value: ", value);
-          setBalance((value: any) => {
-            if (!value) {
-              return 0;
-            } else {
-              return value;
-            }
-          });
-        } else {
-          setBalance(0);
-        }
-      } catch (error) {}
+          if(value){
+            setBalance(Number(value)/100000000)
+          }else{
+            setBalance(0)
+          }
+        } 
+      } catch (error) { }
     } else {
       window.open(fewchaExt, "_blank");
     }
@@ -179,6 +178,7 @@ const App: React.FC = () => {
                 target="_blank"
                 className="relative hover:underline"
                 title="Go to Metamask website"
+                rel="noreferrer"
               >
                 <p className="title">Metamask Wallet </p>
                 <img
@@ -269,6 +269,7 @@ const App: React.FC = () => {
                     className="hover:underline hover:text-blue-500"
                     target="_blank"
                     title="Fewcha Docs"
+                    rel="noreferrer"
                   >
                     https://docs.fewcha.app/
                   </a>
@@ -280,6 +281,7 @@ const App: React.FC = () => {
                     target="_blank"
                     title="NPM fewcha web3"
                     className="hover:underline hover:text-blue-500"
+                    rel="noreferrer"
                   >
                     @fewcha/web3
                   </a>
@@ -307,7 +309,7 @@ const App: React.FC = () => {
                     </p>
                     <p>
                       <strong>
-                        Balance: <code>{balance}</code>
+                        Balance: <code>{balance}</code> APT
                       </strong>
                     </p>
                     {!address && (
