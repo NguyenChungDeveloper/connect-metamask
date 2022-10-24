@@ -96,11 +96,11 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    const timeId = setInterval(() => {
-      const date = new Date().toLocaleString();
-      setTime(date);
-    }, 1000);
-    return () => clearInterval(timeId);
+    // const timeId = setInterval(() => {
+    //   const date = new Date().toLocaleString();
+    //   setTime(date);
+    // }, 1000);
+    // return () => clearInterval(timeId);
   }, []);
   const truncateRegex = /^(0x[a-zA-Z0-9]{4})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/;
 
@@ -109,7 +109,6 @@ const App: React.FC = () => {
     if (!match) return address;
     return `${match[1]}...${match[2]}`;
   };
-
 
   async function handleInstallOrConnectFewcha() {
     if (hasFecha) {
@@ -136,16 +135,12 @@ const App: React.FC = () => {
         const balance = await (window as any).fewcha.getBalance();
         console.log("balance: ", balance);
         if (balance.status === 200) {
-          const key = Object.keys(balance.data)[0];
-          const value = balance.data[key];
+          // const key = Object.keys(balance.data)[0];
+          const value = Number(balance.data) / 100000000 || 0;
           console.log("value: ", value);
-          if(value){
-            setBalance(Number(value)/100000000)
-          }else{
-            setBalance(0)
-          }
-        } 
-      } catch (error) { }
+          setBalance(value);
+        }
+      } catch (error) {}
     } else {
       window.open(fewchaExt, "_blank");
     }
@@ -289,7 +284,7 @@ const App: React.FC = () => {
                 <p>
                   After the installation is done, create an account,click on
                   fewcha extension and create an account this is very simple,
-                  for the network, the advice is to choose Aptos Devnet. Click
+                  for the network, the advice is to choose Aptos Testnet. Click
                   faucet to get Balance free.
                 </p>
                 <p className="italic my-2">
